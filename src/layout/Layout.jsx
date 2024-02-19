@@ -1,19 +1,20 @@
 import { useEffect, useState } from "react";
 import { Link, Outlet } from "react-router-dom"
-import AuthService from "../services/Auth.service";
+import { AuthService } from '../services/AuthService';
 
 const Layout = () => {
     const [currentUser, setCurrentUser] = useState();
+    const authApi = AuthService();
     useEffect(() => {
-        const user = AuthService.getCurrentUser();
+        const user = authApi.getCurrentUser();
 
         if (user) {
             setCurrentUser(user);
         }
-    }, []);
+    }, [authApi]);
 
     const logOut = () => {
-        AuthService.logout();
+        authApi.logout();
     };
 
     return (

@@ -1,23 +1,36 @@
 import { useEffect, useState } from "react";
-import UserService from "../services/User.service";
+import { AuthService } from '../services/AuthService';
 
 const MyImages = () => {
     const [images, setImages] = useState([]);
+    const [error, setError] = useState('');
+
+    const authApi = AuthService();
 
     useEffect(() => {
-        getImages();
-    }, [])
+        authApi.fetchImages().then(res => {
+            localStorage.setItem('auth_token', res.data.token);
+            localStorage.setItem('auth_user', res.data.user.name);
+            setImages(res.data);
+        }).catch(error => {
+            setError(error.response.data.errors.msg);
+        });
+    }, [authApi])
 
-    const getImages = async () => {
+    /* const getImages = async () => {
         try {
-            const response = await UserService.getUserImages()
+            const response = await fetchData()
             console.log(response.data)
             setImages(response);
         } catch (error) {
             console.error('Error to show info', error);
         }
+    } */
 
-    }
+    
+
+    setError('');
+
     return (
         <>
             {

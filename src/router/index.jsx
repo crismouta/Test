@@ -3,6 +3,7 @@ import Layout from "../layout/Layout";
 import Home from '../pages/Home';
 import Login from '../pages/Login';
 import Welcome from '../pages/Welcome';
+import PrivateRoutes from '../utils/PrivateRoutes';
 
 export const router = createBrowserRouter([
     {
@@ -14,13 +15,13 @@ export const router = createBrowserRouter([
                 element: <Welcome />
             },
             {
-                path: "/myImages",
-                element: <Home />
-            },
-            {
                 path: "/login",
                 element: <Login />
-            }
+            },
+            {
+                path: "/myImages",
+                element: <PrivateRoutes><Home /></PrivateRoutes>
+            },
         ]
     }
 ]); 
