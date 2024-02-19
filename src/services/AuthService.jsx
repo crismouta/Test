@@ -19,26 +19,18 @@ export const AuthService = () => {
 
     const postLogin = async (username, password) => {
         try {
-
             const response = await axios.post(urlLogin, {
                 username,
                 password,
             }, {
                 responseType: 'json',
             });
-            console.log("entra")
             console.log(response.data)
-
             const { token } = response.data;
-
-            // Armazenar o token JWT no localStorage
             localStorage.setItem('auth_token', token);
-
-            // Retornar o token para ser usado em outras requisições
+    
             return token;
         } catch (error) {
-            console.log("nao entra")
-            // Tratar o erro de login (ex: usuário não encontrado, senha incorreta)
             console.error(error);
 
             throw error;
